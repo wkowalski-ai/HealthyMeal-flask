@@ -1,0 +1,94 @@
+# AI Rules for HealthyMeal
+
+## 1. Przegląd produktu
+
+HealthyMeal to aplikacja MVP, która ma na celu umożliwienie użytkownikom dostosowywania dostępnych w sieci przepisów kulinarnych do ich osobistych potrzeb i wymagań żywieniowych. Aplikacja wykorzystuje model AI Gemini Flash 2.0 do modyfikowania przepisów na podstawie indywidualnych preferencji, takich jak alergie, wytyczne dotyczące diety oraz produkty, których należy unikać. Produkt obejmuje podstawowy system zarządzania przepisami, profil użytkownika oraz mechanizmy autoryzacji i bezpiecznego dostępu.
+
+Technologie:
+- Python
+- Flask
+- Flask-SQLAlchemy
+- Flask-Marshmallow
+- Flask-Limiter
+- Flask-Login
+- Gemini Flash 2.0
+- Openrouter API
+
+
+## BACKEND
+
+### Guidelines for PYTHON
+
+#### FLASK
+
+- Use Flask Blueprints to organize routes and views by feature or domain for better code organization
+- Implement Flask-SQLAlchemy with proper session management to prevent connection leaks and memory issues
+- Use Flask-Marshmallow for serialization and request validation of {{data_types}}
+- Apply the application factory pattern to enable testing and multiple deployment configurations
+- Implement Flask-Limiter for rate limiting on public endpoints to prevent abuse of {{public_apis}}
+- Use Flask-Login or Flask-JWT-Extended for authentication with proper session timeout and refresh mechanisms
+
+
+
+## CODING_PRACTICES
+
+### Guidelines for SUPPORT_LEVEL
+
+#### SUPPORT_BEGINNER
+
+- When running in agent mode, execute up to 3 actions at a time and ask for approval or course correction afterwards.
+- Write code with clear variable names and include explanatory comments for non-obvious logic. Avoid shorthand syntax and complex patterns.
+- Provide full implementations rather than partial snippets. Include import statements, required dependencies, and initialization code.
+- Add defensive coding patterns and clear error handling. Include validation for user inputs and explicit type checking.
+- Suggest simpler solutions first, then offer more optimized versions with explanations of the trade-offs.
+- Briefly explain why certain approaches are used and link to relevant documentation or learning resources.
+- When suggesting fixes for errors, explain the root cause and how the solution addresses it to build understanding. Ask for confirmation before proceeding.
+- Offer introducing basic test cases that demonstrate how the code works and common edge cases to consider.
+
+
+
+## CODING_PRACTICES
+
+### Guidelines for VERSION_CONTROL
+
+#### GIT
+
+- Use conventional commits to create meaningful commit messages
+- Use feature branches with descriptive names following {{branch_naming_convention}}
+- Write meaningful commit messages that explain why changes were made, not just what
+- Keep commits focused on single logical changes to facilitate code review and bisection
+- Use interactive rebase to clean up history before merging feature branches
+- Leverage git hooks to enforce code quality checks before commits and pushes
+
+
+
+## CODING_PRACTICES
+
+### Guidelines for VERSION_CONTROL
+
+#### GITHUB
+
+- Use pull request templates to standardize information provided for code reviews
+- Implement branch protection rules for {{protected_branches}} to enforce quality checks
+- Configure required status checks to prevent merging code that fails tests or linting
+- Use GitHub Actions for CI/CD workflows to automate testing and deployment
+- Implement CODEOWNERS files to automatically assign reviewers based on code paths
+- Use GitHub Projects for tracking work items and connecting them to code changes
+
+
+
+## DEVOPS
+
+### Guidelines for CI_CD
+
+#### GITHUB_ACTIONS
+
+- Check if `package.json` exists in project root and summarize key scripts
+- Check if `.nvmrc` exists in project root
+- Check if `.env.example` exists in project root to identify key `env:` variables
+- Always use terminal command: `git branch -a | cat` to verify whether we use `main` or `master` branch
+- Always use `env:` variables and secrets attached to jobs instead of global workflows
+- Always use `npm ci` for Node-based dependency setup
+- Extract common steps into composite actions in separate files
+- Once you're done, as a final step conduct the following: for each public action always use <tool>"Run Terminal"</tool> to see what is the most up-to-date version (use only major version) - extract tag_name from the response:
+- ```bash curl -s https://api.github.com/repos/{owner}/{repo}/releases/latest ```
