@@ -1,5 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>View Recipe</h2>
-<p>Recipe details go here.</p>
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <h2 class="mb-3">{{ recipe.title }}</h2>
+    <div class="mb-3">
+      <strong>Treść przepisu:</strong>
+      <div class="border rounded p-3 bg-light">{{ recipe.content }}</div>
+    </div>
+    <div class="mb-3 text-muted">
+      <small>Utworzono: {{ recipe.created_at.strftime('%Y-%m-%d %H:%M') }}<br>
+      Ostatnia edycja: {{ recipe.updated_at.strftime('%Y-%m-%d %H:%M') }}</small>
+    </div>
+    <a href="{{ url_for('recipe.edit_recipe', recipe_id=recipe.id) }}" class="btn btn-warning">Edytuj</a>
+    <a href="#" class="btn btn-danger ms-2 disabled">Usuń</a>
+    <a href="#" class="btn btn-info ms-2">Dostosuj z AI</a>
+    <a href="{{ url_for('recipe.recipe_list') }}" class="btn btn-secondary ms-2">Powrót do listy</a>
+  </div>
+</div>
 {% endblock %}

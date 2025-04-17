@@ -1,24 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Edit Recipe</h2>
-<form method="post">
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-        {{ form.title.label }}
-        {{ form.title(class_="form-control") }}
-    </div>
-    <div class="mb-3">
-        {{ form.description.label }}
-        {{ form.description(class_="form-control") }}
-    </div>
-    <div class="mb-3">
-        {{ form.ingredients.label }}
-        {{ form.ingredients(class_="form-control") }}
-    </div>
-    <div class="mb-3">
-        {{ form.instructions.label }}
-        {{ form.instructions(class_="form-control") }}
-    </div>
-    {{ form.submit(class_="btn btn-primary") }}
-</form>
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <h2 class="mb-4">Edycja przepisu</h2>
+    <form method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        {{ form.title.label(class="form-label") }}
+        {{ form.title(class_="form-control", placeholder="Tytuł przepisu") }}
+        {% for error in form.title.errors %}
+          <div class="text-danger small">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="mb-3">
+        {{ form.content.label(class="form-label") }}
+        {{ form.content(class_="form-control", placeholder="Treść przepisu") }}
+        {% for error in form.content.errors %}
+          <div class="text-danger small">{{ error }}</div>
+        {% endfor %}
+      </div>
+      {{ form.submit(class_="btn btn-primary") }}
+      <a href="{{ url_for('recipe.view_recipe', recipe_id=recipe.id) }}" class="btn btn-secondary ms-2">Anuluj</a>
+    </form>
+  </div>
+</div>
 {% endblock %}
