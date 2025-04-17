@@ -41,5 +41,7 @@ def create_app():
     # Import i rejestracja tras/blueprintów
     from .routes import main as main_blueprint
     app.register_blueprint(main_blueprint)
+    from .auth_routes import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint)
 
     return app
