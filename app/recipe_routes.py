@@ -53,3 +53,17 @@ def view_recipe(recipe_id):
         flash('Brak dostępu do tego przepisu.', 'danger')
         return redirect(url_for('recipe.recipe_list'))
     return render_template('recipe/view_recipe.html', recipe=recipe)
+
+@recipe_bp.route('/recipes/<int:recipe_id>/modify', methods=['POST'])
+@login_required
+def modify_recipe(recipe_id):
+    from flask import current_app
+    from .utils import modify_recipe_with_ai
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if recipe.user_id != current_user.id:
+        flash('Brak dostępu do tego przepisu.', 'danger')
+        return redirect(url_for('recipe.recipe_list'))
+    preferences = current_user.preferences or ""
+    api_key = current_app.config.get('OPENROUTER_API_KEY')
+    ai_result, ai_error = modify_recipe_with_ai(recipe.content, preferences, api_key)
+    return render_template('recipe/ai_result.html', recipe=recipe, ai_result=ai_result, ai_error=ai_error)

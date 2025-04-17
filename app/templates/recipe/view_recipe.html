@@ -13,8 +13,20 @@
     </div>
     <a href="{{ url_for('recipe.edit_recipe', recipe_id=recipe.id) }}" class="btn btn-warning">Edytuj</a>
     <a href="#" class="btn btn-danger ms-2 disabled">Usuń</a>
-    <a href="#" class="btn btn-info ms-2">Dostosuj z AI</a>
+    <form method="post" action="{{ url_for('recipe.modify_recipe', recipe_id=recipe.id) }}" class="d-inline" id="ai-modify-form">
+      <button type="submit" class="btn btn-info ms-2" id="ai-modify-btn">
+        <span id="ai-modify-text">Dostosuj z AI</span>
+        <span id="ai-modify-loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+      </button>
+    </form>
     <a href="{{ url_for('recipe.recipe_list') }}" class="btn btn-secondary ms-2">Powrót do listy</a>
+    <script>
+      document.getElementById('ai-modify-form').addEventListener('submit', function() {
+        document.getElementById('ai-modify-btn').disabled = true;
+        document.getElementById('ai-modify-text').classList.add('d-none');
+        document.getElementById('ai-modify-loading').classList.remove('d-none');
+      });
+    </script>
   </div>
 </div>
 {% endblock %}

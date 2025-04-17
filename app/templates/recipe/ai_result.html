@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-10">
+    <h2 class="mb-4">Zmodyfikowany przepis (AI)</h2>
+    <div class="mb-3">
+      <strong>Oryginalny tytuł:</strong> {{ recipe.title }}
+    </div>
+    {% if ai_error %}
+      <div class="alert alert-danger">{{ ai_error }}</div>
+    {% elif ai_result %}
+      <div class="mb-3">
+        <strong>Zmodyfikowany przepis:</strong>
+        <pre class="bg-light p-3 border rounded">{{ ai_result }}</pre>
+      </div>
+      <button class="btn btn-outline-secondary mb-3" onclick="copyAIResult()">Kopiuj do schowka</button>
+      <script>
+        function copyAIResult() {
+          const text = document.querySelector('pre').innerText;
+          navigator.clipboard.writeText(text).then(function() {
+            alert('Zmodyfikowany przepis został skopiowany!');
+          });
+        }
+      </script>
+    {% else %}
+      <div class="alert alert-warning">Brak wyniku AI.</div>
+    {% endif %}
+    <a href="{{ url_for('recipe.view_recipe', recipe_id=recipe.id) }}" class="btn btn-secondary">Powrót do przepisu</a>
+  </div>
+</div>
+{% endblock %}
