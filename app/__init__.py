@@ -45,5 +45,7 @@ def create_app():
     app.register_blueprint(auth_blueprint)
     from .recipe_routes import recipe_bp
     app.register_blueprint(recipe_bp)
+    from .user_routes import user_bp
+    app.register_blueprint(user_bp)
 
     return app

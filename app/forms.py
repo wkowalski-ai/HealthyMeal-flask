@@ -33,4 +33,8 @@ class RecipeForm(FlaskForm):
     content = StringField('Treść przepisu', validators=[DataRequired()])
     submit = SubmitField('Zapisz przepis')
 
+class ProfileForm(FlaskForm):
+    preferences = TextAreaField('Preferencje żywieniowe', render_kw={"rows": 4})
+    submit = SubmitField('Zapisz profil')
+
     submit = SubmitField('Reset Password')
