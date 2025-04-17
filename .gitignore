@@ -1,6 +1,22 @@
+# Virtual environment
 venv/
+
+# Python cache
 __pycache__/
 *.pyc
+
+# Database files
 *.db
+
+# Environment variables
 .env
+
+# Flask-Migrate migrations
 migrations/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
