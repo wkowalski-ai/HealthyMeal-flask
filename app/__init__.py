@@ -1,27 +1,36 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_wtf import CSRFProtect
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_wtf import CSRFProtect
 from config import Config
 
+# Inicjalizacja rozszerzeń (bez aplikacji)
 db = SQLAlchemy()
 migrate = Migrate()
-csrf = CSRFProtect()
 login_manager = LoginManager()
 mail = Mail()
+csrf = CSRFProtect()
+
 
 def create_app():
     app = Flask(__name__)
+    # Załaduj konfigurację z config.py (Config ładuje też .env przez dotenv)
     app.config.from_object(Config)
 
+    # Inicjalizuj rozszerzenia
     db.init_app(app)
     migrate.init_app(app, db)
-    csrf.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
+    csrf.init_app(app)
 
-    from . import routes, models
-    
+    # Rejestracja modeli (dla migracji)
+    from . import models
+
+    # Import i rejestracja tras/blueprintów
+    from .routes import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+
     return app
