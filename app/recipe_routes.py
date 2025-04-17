@@ -63,7 +63,21 @@ def modify_recipe(recipe_id):
     if recipe.user_id != current_user.id:
         flash('Brak dostępu do tego przepisu.', 'danger')
         return redirect(url_for('recipe.recipe_list'))
-    preferences = current_user.preferences or ""
-    api_key = current_app.config.get('OPENROUTER_API_KEY')
-    ai_result, ai_error = modify_recipe_with_ai(recipe.content, preferences, api_key)
+    preferences = current_user.preferences
+    if not preferences or not preferences.strip():
+        ai_result = None
+        ai_error = "Aby skorzystać z funkcji AI, uzupełnij swoje preferencje żywieniowe w profilu użytkownika."
+    else:
+        api_key = current_app.config.get('OPENROUTER_API_KEY')
+        ai_result, ai_error = modify_recipe_with_ai(recipe.content, preferences, api_key)
+        if ai_error:
+            # Zamień typowe błędy na czytelne komunikaty
+            if "Brak klucza API" in ai_error:
+                ai_error = "Brak klucza API do AI. Skontaktuj się z administratorem." 
+            elif "Błąd API OpenRouter" in ai_error:
+                ai_error = "Wystąpił problem z połączeniem z AI. Spróbuj ponownie później lub skontaktuj się z administratorem." 
+            elif "Nie udało się uzyskać odpowiedzi" in ai_error:
+                ai_error = "AI nie zwróciło odpowiedzi. Spróbuj ponownie później."
+            elif "Błąd podczas komunikacji" in ai_error:
+                ai_error = "Wystąpił błąd podczas komunikacji z AI. Spróbuj ponownie później."
     return render_template('recipe/ai_result.html', recipe=recipe, ai_result=ai_result, ai_error=ai_error)
