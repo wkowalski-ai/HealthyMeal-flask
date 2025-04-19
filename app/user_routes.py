@@ -10,8 +10,10 @@ user_bp = Blueprint('user', __name__)
 def profile():
     form = ProfileForm(obj=current_user)
     if form.validate_on_submit():
-        current_user.preferences = form.preferences.data
+        current_user.allergies = form.allergies.data
+        current_user.excluded_products = form.excluded_products.data
+        current_user.favorite_products = form.favorite_products.data
         db.session.commit()
-        flash('Preferencje zostały zapisane.', 'success')
+        flash('Profil został zapisany.', 'success')
         return redirect(url_for('user.profile'))
     return render_template('user/profile.html', form=form, user=current_user)

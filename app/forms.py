@@ -34,7 +34,7 @@ class RecipeForm(FlaskForm):
     submit = SubmitField('Zapisz przepis')
 
 class ProfileForm(FlaskForm):
-    preferences = TextAreaField('Preferencje żywieniowe', render_kw={"rows": 4})
+    allergies = TextAreaField('Alergie', render_kw={"rows": 2, "placeholder": "Np. orzechy, mleko..."})
+    excluded_products = TextAreaField('Produkty wykluczone', render_kw={"rows": 2, "placeholder": "Czego nie możesz jeść?"})
+    favorite_products = TextAreaField('Ulubione produkty', render_kw={"rows": 2, "placeholder": "Co lubisz najbardziej?"})
     submit = SubmitField('Zapisz profil')
-
-    submit = SubmitField('Reset Password')

@@ -10,6 +10,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     preferences = db.Column(db.Text, nullable=True)
+    allergies = db.Column(db.Text, nullable=True)
+    excluded_products = db.Column(db.Text, nullable=True)
+    favorite_products = db.Column(db.Text, nullable=True)
     recipes = db.relationship('Recipe', backref='user', lazy='dynamic')
 
     def set_password(self, password):

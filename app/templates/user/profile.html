@@ -9,14 +9,44 @@
         <label class="form-label">Email</label>
         <input type="email" class="form-control" value="{{ user.email }}" readonly>
       </div>
-      <div class="mb-3">
-        {{ form.preferences.label(class="form-label") }}
-        {{ form.preferences(class_="form-control", placeholder="Twoje preferencje żywieniowe...") }}
-        {% for error in form.preferences.errors %}
-          <div class="text-danger small">{{ error }}</div>
-        {% endfor %}
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-header bg-warning">Alergie</div>
+            <div class="card-body">
+              {{ form.allergies(class_="form-control", placeholder="Np. orzechy, mleko...") }}
+              {% for error in form.allergies.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-header bg-danger text-white">Produkty wykluczone</div>
+            <div class="card-body">
+              {{ form.excluded_products(class_="form-control", placeholder="Czego nie możesz jeść?") }}
+              {% for error in form.excluded_products.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-header bg-success text-white">Ulubione produkty</div>
+            <div class="card-body">
+              {{ form.favorite_products(class_="form-control", placeholder="Co lubisz najbardziej?") }}
+              {% for error in form.favorite_products.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
       </div>
-      {{ form.submit(class_="btn btn-success") }}
+      <div class="mt-3">
+        {{ form.submit(class_="btn btn-success") }}
+      </div>
     </form>
   </div>
 </div>
