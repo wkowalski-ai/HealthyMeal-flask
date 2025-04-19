@@ -23,7 +23,10 @@
             <td>
               <a href="{{ url_for('recipe.view_recipe', recipe_id=recipe.id) }}" class="btn btn-primary btn-sm">Podgląd</a>
               <a href="{{ url_for('recipe.edit_recipe', recipe_id=recipe.id) }}" class="btn btn-warning btn-sm">Edytuj</a>
-              <a href="#" class="btn btn-danger btn-sm disabled">Usuń</a>
+              <form method="post" action="{{ url_for('recipe.delete_recipe', recipe_id=recipe.id) }}" style="display:inline;" onsubmit="return confirmDelete(this, '{{ recipe.title }}');">
+                {{ delete_forms[recipe.id].csrf_token }}
+                <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+              </form>
             </td>
           </tr>
           {% endfor %}
@@ -34,4 +37,9 @@
     {% endif %}
   </div>
 </div>
+<script>
+function confirmDelete(form, title) {
+    return confirm('Czy na pewno chcesz usunąć przepis ' + title + '?');
+}
+</script>
 {% endblock %}

@@ -28,6 +28,9 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
 
+class DeleteRecipeForm(FlaskForm):
+    pass
+
 class RecipeForm(FlaskForm):
     title = StringField('Tytuł', validators=[DataRequired(), Length(max=140)])
     content = StringField('Treść przepisu', validators=[DataRequired()])

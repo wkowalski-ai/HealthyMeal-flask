@@ -6,12 +6,15 @@ from .forms import RecipeForm
 
 recipe_bp = Blueprint('recipe', __name__)
 
+from .forms import DeleteRecipeForm
+
 @recipe_bp.route('/')
 @recipe_bp.route('/recipes')
 @login_required
 def recipe_list():
     recipes = Recipe.query.filter_by(user_id=current_user.id).order_by(Recipe.updated_at.desc()).all()
-    return render_template('recipe/index.html', recipes=recipes)
+    delete_forms = {recipe.id: DeleteRecipeForm() for recipe in recipes}
+    return render_template('recipe/index.html', recipes=recipes, delete_forms=delete_forms)
 
 @recipe_bp.route('/recipes/new', methods=['GET', 'POST'])
 @login_required
@@ -28,6 +31,18 @@ def create_recipe():
         flash('Przepis został dodany!', 'success')
         return redirect(url_for('recipe.recipe_list'))
     return render_template('recipe/create_recipe.html', form=form)
+
+@recipe_bp.route('/recipes/<int:recipe_id>/delete', methods=['POST'])
+@login_required
+def delete_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if recipe.user_id != current_user.id:
+        flash('Brak dostępu do tego przepisu.', 'danger')
+        return redirect(url_for('recipe.recipe_list'))
+    db.session.delete(recipe)
+    db.session.commit()
+    flash(f'Przepis "{recipe.title}" został usunięty.', 'success')
+    return redirect(url_for('recipe.recipe_list'))
 
 @recipe_bp.route('/recipes/<int:recipe_id>/edit', methods=['GET', 'POST'])
 @login_required
