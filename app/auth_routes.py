@@ -13,13 +13,13 @@ def register():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
-            flash('Email already registered.', 'danger')
+            flash('Email już zarejestrowany.', 'danger')
             return redirect(url_for('auth.register'))
         new_user = User(email=form.email.data)
         new_user.set_password(form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        flash('Registration successful. Please log in.', 'success')
+        flash('Rejestracja zakończona sukcesem. Możesz się teraz zalogować.', 'success')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
@@ -40,8 +40,8 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('You have been logged out.', 'info')
-    return redirect(url_for('main.index'))
+    flash('Zostałeś wylogowany.', 'info')
+    return redirect(url_for('auth.login'))
 
 @auth.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
