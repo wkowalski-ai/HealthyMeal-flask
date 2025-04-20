@@ -58,3 +58,4 @@ class Recipe(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    ai_modified = db.Column(db.Boolean, default=False, nullable=False)  # Czy przepis był modyfikowany przez AI

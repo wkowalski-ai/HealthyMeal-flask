@@ -12,6 +12,7 @@
           <tr>
             <th>Tytuł</th>
             <th>Ostatnia modyfikacja</th>
+            <th>Dostosowany przez AI</th>
             <th>Akcje</th>
           </tr>
         </thead>
@@ -20,6 +21,13 @@
           <tr>
             <td>{{ recipe.title }}</td>
             <td>{{ recipe.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>
+              {% if recipe.ai_modified %}
+                Tak <span class="badge bg-success ms-1">AI</span>
+              {% else %}
+                Nie <span class="badge bg-secondary ms-1">&#10006;</span>
+              {% endif %}
+            </td>
             <td>
               <a href="{{ url_for('recipe.view_recipe', recipe_id=recipe.id) }}" class="btn btn-primary btn-sm">Podgląd</a>
               <a href="{{ url_for('recipe.edit_recipe', recipe_id=recipe.id) }}" class="btn btn-warning btn-sm">Edytuj</a>
