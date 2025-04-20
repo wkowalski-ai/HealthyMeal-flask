@@ -12,8 +12,10 @@
           <tr>
             <th>Tytuł</th>
             <th>Ostatnia modyfikacja</th>
-            <th>Dostosowany przez AI</th>
-            <th>Akcje</th>
+            <th style="white-space:nowrap;">Akcje</th>
+            <th style="min-width:90px; max-width:110px; text-align:center;">
+              <span style="display:inline-block;line-height:1.1;text-align:left;">Dostosowany<br>do profilu</span>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -22,19 +24,21 @@
             <td>{{ recipe.title }}</td>
             <td>{{ recipe.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
             <td>
+              <div class="d-flex flex-row flex-nowrap gap-1 align-items-center">
+                <a href="{{ url_for('recipe.view_recipe', recipe_id=recipe.id) }}" class="btn btn-primary btn-sm">Podgląd</a>
+                <a href="{{ url_for('recipe.edit_recipe', recipe_id=recipe.id) }}" class="btn btn-warning btn-sm">Edytuj</a>
+                <form method="post" action="{{ url_for('recipe.delete_recipe', recipe_id=recipe.id) }}" style="display:inline;" onsubmit="return confirmDelete(this, '{{ recipe.title }}');">
+                  {{ delete_forms[recipe.id].csrf_token }}
+                  <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+                </form>
+              </div>
+            </td>
+            <td>
               {% if recipe.ai_modified %}
                 Tak <span class="badge bg-success ms-1">AI</span>
               {% else %}
                 Nie <span class="badge bg-secondary ms-1">&#10006;</span>
               {% endif %}
-            </td>
-            <td>
-              <a href="{{ url_for('recipe.view_recipe', recipe_id=recipe.id) }}" class="btn btn-primary btn-sm">Podgląd</a>
-              <a href="{{ url_for('recipe.edit_recipe', recipe_id=recipe.id) }}" class="btn btn-warning btn-sm">Edytuj</a>
-              <form method="post" action="{{ url_for('recipe.delete_recipe', recipe_id=recipe.id) }}" style="display:inline;" onsubmit="return confirmDelete(this, '{{ recipe.title }}');">
-                {{ delete_forms[recipe.id].csrf_token }}
-                <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
-              </form>
             </td>
           </tr>
           {% endfor %}
