@@ -13,12 +13,29 @@
         {% endfor %}
       </div>
       <div class="mb-3">
+        {{ form.ingredients.label(class="form-label") }}
+        {{ form.ingredients(class_="form-control", placeholder="Składniki", rows=4, oninput="autoGrow(this)") }}
+        {% for error in form.ingredients.errors %}
+          <div class="text-danger small">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="mb-3">
         {{ form.content.label(class="form-label") }}
-        {{ form.content(class_="form-control", placeholder="Treść przepisu") }}
+        {{ form.content(class_="form-control", placeholder="Sposób przygotowania", rows=6, oninput="autoGrow(this)") }}
         {% for error in form.content.errors %}
           <div class="text-danger small">{{ error }}</div>
         {% endfor %}
       </div>
+      <script>
+        function autoGrow(element) {
+          element.style.height = 'auto';
+          element.style.height = (element.scrollHeight) + 'px';
+        }
+        // Auto-grow on page load for pre-filled fields
+        window.addEventListener('DOMContentLoaded', function() {
+          document.querySelectorAll('textarea').forEach(autoGrow);
+        });
+      </script>
       {{ form.submit(class_="btn btn-success") }}
       <a href="{{ url_for('recipe.recipe_list') }}" class="btn btn-secondary ms-2">Anuluj</a>
     </form>

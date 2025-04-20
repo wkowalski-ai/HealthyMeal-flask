@@ -33,7 +33,8 @@ class DeleteRecipeForm(FlaskForm):
 
 class RecipeForm(FlaskForm):
     title = StringField('Tytuł', validators=[DataRequired(), Length(max=140)])
-    content = StringField('Treść przepisu', validators=[DataRequired()])
+    ingredients = TextAreaField('Składniki', render_kw={"rows": 4, "placeholder": "Składniki...", "oninput": "autoGrow(this)"})
+    content = TextAreaField('Sposób przygotowania', render_kw={"rows": 6, "placeholder": "Sposób przygotowania...", "oninput": "autoGrow(this)"})
     submit = SubmitField('Zapisz przepis')
 
 class ProfileForm(FlaskForm):
