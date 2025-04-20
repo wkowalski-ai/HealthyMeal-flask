@@ -13,8 +13,8 @@
             <th>Tytuł</th>
             <th>Ostatnia modyfikacja</th>
             <th style="white-space:nowrap;">Akcje</th>
-            <th style="min-width:90px; max-width:110px; text-align:center;">
-              <span style="display:inline-block;line-height:1.1;text-align:left;">Dostosowany<br>do profilu</span>
+            <th style="min-width:90px; max-width:110px; text-align:left;">
+              <span style="display:inline-block;line-height:1.1;">Dostosowany<br>do profilu</span>
             </th>
           </tr>
         </thead>
@@ -33,7 +33,7 @@
                 </form>
               </div>
             </td>
-            <td>
+            <td style="text-align:left;">
               {% if recipe.ai_modified %}
                 Tak <span class="badge bg-success ms-1">AI</span>
               {% else %}
