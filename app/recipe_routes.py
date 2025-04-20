@@ -23,6 +23,7 @@ def create_recipe():
     if form.validate_on_submit():
         new_recipe = Recipe(
             title=form.title.data,
+            ingredients=form.ingredients.data,
             content=form.content.data,
             user_id=current_user.id
         )
@@ -54,6 +55,7 @@ def edit_recipe(recipe_id):
     form = RecipeForm(obj=recipe)
     if form.validate_on_submit():
         recipe.title = form.title.data
+        recipe.ingredients = form.ingredients.data
         recipe.content = form.content.data
         db.session.commit()
         flash('Przepis został zaktualizowany!', 'success')
